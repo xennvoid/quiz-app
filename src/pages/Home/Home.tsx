@@ -4,10 +4,9 @@ interface HomeProps {}
 
 const Home: FC<HomeProps> = ({}) => {
     return (
-        <>
-            <h1 className="text-5xl font-bold text-red-600">Quiz App</h1>
-            <span>123</span>
-        </>
+        <div className="container mx-auto">
+            <h1 className="text-5xl font-bold text-green-900 text-center">Quiz App</h1>
+        </div>
     );
 };
 
