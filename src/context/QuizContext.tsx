@@ -6,6 +6,7 @@ export interface IQuizContext {
     quizes: IQuiz[];
     setQuizes: React.Dispatch<React.SetStateAction<IQuiz[]>>;
     addNewQuiz: (name: string, questions: IQuestion[]) => void;
+    removeQuiz: (id: string) => void;
 }
 
 export const QuizContext = createContext<IQuizContext | null>(null);
@@ -23,12 +24,16 @@ const QuizContextProvider = ({ children }: React.PropsWithChildren<{}>) => {
         setQuizes((quizes) => [...quizes, { id: uuidv4(), name, questions }]);
     };
 
+    const removeQuiz = (id: string) => {
+        setQuizes((quizes) => quizes.filter((quiz) => quiz.id !== id));
+    };
+
     useEffect(() => {
         localStorage.setItem('quizes', JSON.stringify(quizes));
     }, [quizes]);
 
     return (
-        <QuizContext.Provider value={{ quizes, setQuizes, addNewQuiz }}>
+        <QuizContext.Provider value={{ quizes, setQuizes, addNewQuiz, removeQuiz }}>
             {children}
         </QuizContext.Provider>
     );
