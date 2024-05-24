@@ -77,7 +77,11 @@ const QuizCreation: FC<QuizCreationProps> = ({}) => {
 
         if (
             questions.some((q) => q.name === '') ||
-            questions.some((question) => question.answers.some((answer) => answer.text === ''))
+            questions.some(
+                (question) =>
+                    question.answers.some((answer) => answer.text === '') ||
+                    questions.some((question) => question.answers.length === 0),
+            )
         ) {
             setInfoMessage('Fill in all fields or delete unnecessary ones');
             return;
