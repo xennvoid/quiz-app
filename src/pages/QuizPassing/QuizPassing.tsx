@@ -1,12 +1,12 @@
-import { FC, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useAppSelector } from '../../store/hooks';
-import { selectQuizById } from '../../store/slices/quizesSlice';
+import { FC, useContext, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import Button from '../../components/Button';
 import QuizOptions from './components/QuizOptions/QuizOptions';
 import { IAnswer } from '../../types/question';
 import QuizScore from './components/QuizScore/QuizScore';
 import QuizQuestionCount from './components/QuizQuestionCount';
+import ROUTES from '../../routes';
+import { QuizContext, IQuizContext } from '../../context/QuizContext';
 
 interface QuizPassingProps {}
 
@@ -15,7 +15,9 @@ const QuizPassing: FC<QuizPassingProps> = ({}) => {
     const [selectedAnswerIdx, setSelectedAnswerIdx] = useState(0);
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const { pathname } = useLocation();
-    const quiz = useAppSelector((state) => selectQuizById(state, pathname.split('/')[2]));
+    const { quizes } = useContext(QuizContext) as IQuizContext;
+
+    const quiz = quizes.find((quiz) => quiz.id === pathname.split('/')[2]);
 
     if (!quiz) return;
 
@@ -55,7 +57,15 @@ const QuizPassing: FC<QuizPassingProps> = ({}) => {
                     selectedAnswers={selectedAnswers}
                 />
             )}
-            {lastQuestionNotDone && <Button onClick={goToNextQuestion}>Next Question</Button>}
+            {lastQuestionNotDone ? (
+                <Button onClick={goToNextQuestion}>Next Question</Button>
+            ) : (
+                <Link
+                    to={ROUTES.HOME.path}
+                    className="bg-black text-white text-center font-bold p-2">
+                    To Home Page
+                </Link>
+            )}
         </div>
     );
 };

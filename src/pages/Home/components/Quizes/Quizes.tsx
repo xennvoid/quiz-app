@@ -1,11 +1,11 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import QuizCard from './QuizCard';
-import { useAppSelector } from '../../../../store/hooks';
+import { IQuizContext, QuizContext } from '../../../../context/QuizContext';
 
 interface QuizesProps {}
 
 const Quizes: FC<QuizesProps> = ({}) => {
-    const { quizes } = useAppSelector((state) => state.quizes);
+    const { quizes } = useContext(QuizContext) as IQuizContext;
 
     return (
         <div className="container grid grid-cols-4 gap-4">

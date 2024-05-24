@@ -1,19 +1,18 @@
-import { ChangeEvent, FC, useState, MouseEvent } from 'react';
+import { ChangeEvent, FC, useState, MouseEvent, useContext } from 'react';
 import Button from '../../components/Button';
 import QuestionCreateForm from './components/QuestionCreateForm';
 import { IQuestion } from '../../types/question';
 import { v4 as uuidv4 } from 'uuid';
-import { useAppDispatch } from '../../store/hooks';
-import { addQuiz } from '../../store/slices/quizesSlice';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input';
+import { QuizContext, IQuizContext } from '../../context/QuizContext';
 
 interface QuizCreationProps {}
 
 const QuizCreation: FC<QuizCreationProps> = ({}) => {
+    const { addNewQuiz } = useContext(QuizContext) as IQuizContext;
     const [infoMessage, setInfoMessage] = useState<string>('');
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
     const [quizName, setQuizName] = useState<string>('');
     const [questions, setQuestions] = useState<IQuestion[]>([
         {
@@ -79,7 +78,8 @@ const QuizCreation: FC<QuizCreationProps> = ({}) => {
             setInfoMessage('You must add quiz name and add at least 1 question');
             return;
         }
-        dispatch(addQuiz({ name: quizName, questions }));
+        addNewQuiz(quizName, questions);
+
         setInfoMessage('');
         setTimeout(() => navigate('/'), 1000);
     };
