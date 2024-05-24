@@ -1,5 +1,6 @@
 import Home from './pages/Home';
 import QuizCreation from './pages/QuizCreation';
+import QuizPassing from './pages/QuizPassing';
 
 const ROUTES = {
     HOME: {
@@ -9,6 +10,10 @@ const ROUTES = {
     QUIZ_CREATION: {
         path: '/create' as const,
         element: QuizCreation,
+    },
+    QUIZ_PASS: {
+        path: '/quiz/:id' as const,
+        element: QuizPassing,
     },
 };
 
