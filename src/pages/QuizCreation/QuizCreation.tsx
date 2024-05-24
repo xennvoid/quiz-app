@@ -6,6 +6,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input';
 import { QuizContext, IQuizContext } from '../../context/QuizContext';
+import LinkButton from '../../components/LinkButton';
+import ROUTES from '../../routes';
 
 interface QuizCreationProps {}
 
@@ -59,7 +61,10 @@ const QuizCreation: FC<QuizCreationProps> = ({}) => {
             return;
         }
 
-        if (questions.some((question) => question.answers.some((answer) => answer.text === ''))) {
+        if (
+            questions.some((q) => q.name === '') ||
+            questions.some((question) => question.answers.some((answer) => answer.text === ''))
+        ) {
             setInfoMessage('Fill in all fields or delete unnecessary ones');
             return;
         }
@@ -71,6 +76,11 @@ const QuizCreation: FC<QuizCreationProps> = ({}) => {
 
     return (
         <div className="container mx-auto flex flex-col gap-5 py-2">
+            <div>
+                <LinkButton to={ROUTES.HOME.path} className="text-white bg-black text-center">
+                    HOME PAGE
+                </LinkButton>
+            </div>
             <Input
                 value={quizName}
                 onChange={(e) => setQuizName(e.target.value)}
