@@ -5,10 +5,12 @@ import { IQuestion } from '../../types/question';
 import { v4 as uuidv4 } from 'uuid';
 import { useAppDispatch } from '../../store/hooks';
 import { addQuiz } from '../../store/slices/quizesSlice';
+import { useNavigate } from 'react-router-dom';
 
 interface QuizCreationProps {}
 
 const QuizCreation: FC<QuizCreationProps> = ({}) => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const [questions, setQuestions] = useState<IQuestion[]>([
         {
@@ -69,6 +71,11 @@ const QuizCreation: FC<QuizCreationProps> = ({}) => {
         );
     };
 
+    const createQuiz = () => {
+        dispatch(addQuiz(questions));
+        setTimeout(() => navigate('/'), 1000);
+    };
+
     return (
         <div className="container mx-auto flex flex-col gap-5">
             {questions.map((question, i) => (
@@ -83,7 +90,7 @@ const QuizCreation: FC<QuizCreationProps> = ({}) => {
                 />
             ))}
             <Button onClick={addNewQuestion}>Add new question</Button>
-            <Button onClick={() => dispatch(addQuiz(questions))}>Create Quiz</Button>
+            <Button onClick={createQuiz}>Create Quiz</Button>
         </div>
     );
 };
