@@ -9,3 +9,8 @@ export interface IQuestion {
     name: string;
     answers: IAnswer[];
 }
+
+export interface IQuiz {
+    name: string;
+    questions: IQuestion[];
+}

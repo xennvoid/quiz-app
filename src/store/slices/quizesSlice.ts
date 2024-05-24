@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { IQuestion } from '../../types/question';
+import { IQuestion, IQuiz } from '../../types/question';
 
 interface QuizesState {
-    quizes: Array<IQuestion[]>;
+    quizes: IQuiz[];
 }
 
 const initialState: QuizesState = {
@@ -13,8 +13,8 @@ const quizesSlice = createSlice({
     name: 'quizes',
     initialState,
     reducers: {
-        addQuiz: (state, action: PayloadAction<IQuestion[]>) => {
-            state.quizes.push(action.payload);
+        addQuiz: (state, action: PayloadAction<{ name: string; questions: IQuestion[] }>) => {
+            state.quizes.push({ name: action.payload.name, questions: action.payload.questions });
         },
     },
 });

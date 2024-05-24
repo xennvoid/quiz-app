@@ -6,12 +6,14 @@ import { v4 as uuidv4 } from 'uuid';
 import { useAppDispatch } from '../../store/hooks';
 import { addQuiz } from '../../store/slices/quizesSlice';
 import { useNavigate } from 'react-router-dom';
+import Input from '../../components/Input';
 
 interface QuizCreationProps {}
 
 const QuizCreation: FC<QuizCreationProps> = ({}) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const [quizName, setQuizName] = useState<string>('');
     const [questions, setQuestions] = useState<IQuestion[]>([
         {
             id: '1',
@@ -72,12 +74,13 @@ const QuizCreation: FC<QuizCreationProps> = ({}) => {
     };
 
     const createQuiz = () => {
-        dispatch(addQuiz(questions));
+        dispatch(addQuiz({ name: quizName, questions }));
         setTimeout(() => navigate('/'), 1000);
     };
 
     return (
         <div className="container mx-auto flex flex-col gap-5">
+            <Input value={quizName} onChange={(e) => setQuizName(e.target.value)} />
             {questions.map((question, i) => (
                 <QuestionCreateForm
                     key={i}
