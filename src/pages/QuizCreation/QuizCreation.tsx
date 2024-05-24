@@ -58,6 +58,11 @@ const QuizCreation: FC<QuizCreationProps> = ({}) => {
             setInfoMessage('You must add quiz name and add at least 1 question');
             return;
         }
+
+        if (questions.some((question) => question.answers.some((answer) => answer.text === ''))) {
+            setInfoMessage('Fill in all fields or delete unnecessary ones');
+            return;
+        }
         addNewQuiz(quizName, questions);
 
         setInfoMessage('');
