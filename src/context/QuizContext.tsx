@@ -11,13 +11,21 @@ export interface IQuizContext {
 export const QuizContext = createContext<IQuizContext | null>(null);
 
 const QuizContextProvider = ({ children }: React.PropsWithChildren<{}>) => {
-    const [quizes, setQuizes] = useState<IQuiz[]>([]);
+    const [quizes, setQuizes] = useState<IQuiz[]>(() => {
+        const value = localStorage.getItem('quizes');
+        if (typeof value === 'string') {
+            return JSON.parse(value);
+        }
+        return [];
+    });
 
     const addNewQuiz = (name: string, questions: IQuestion[]) => {
         setQuizes((quizes) => [...quizes, { id: uuidv4(), name, questions }]);
     };
 
-    useEffect(() => {}, []);
+    useEffect(() => {
+        localStorage.setItem('quizes', JSON.stringify(quizes));
+    }, [quizes]);
 
     return (
         <QuizContext.Provider value={{ quizes, setQuizes, addNewQuiz }}>

@@ -14,27 +14,7 @@ const QuizCreation: FC<QuizCreationProps> = ({}) => {
     const [infoMessage, setInfoMessage] = useState<string>('');
     const navigate = useNavigate();
     const [quizName, setQuizName] = useState<string>('');
-    const [questions, setQuestions] = useState<IQuestion[]>([
-        {
-            id: '1',
-            name: 'What is React?',
-            answers: [
-                { id: uuidv4(), text: 'Library', isTrue: true },
-                { id: uuidv4(), text: 'Programming Language', isTrue: false },
-                { id: uuidv4(), text: `I don't know`, isTrue: false },
-            ],
-        },
-        {
-            id: '2',
-            name: 'What is JS?',
-            answers: [
-                { id: uuidv4(), text: 'Library', isTrue: false },
-                { id: uuidv4(), text: 'Programming Language', isTrue: true },
-                { id: uuidv4(), text: `I don't know`, isTrue: false },
-                { id: uuidv4(), text: `...`, isTrue: false },
-            ],
-        },
-    ]);
+    const [questions, setQuestions] = useState<IQuestion[]>([]);
 
     const addNewQuestion = () => {
         setQuestions([...questions, { id: uuidv4(), name: '', answers: [] }]);
