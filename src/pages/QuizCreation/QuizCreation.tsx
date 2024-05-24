@@ -3,10 +3,13 @@ import Button from '../../components/Button';
 import QuestionCreateForm from './components/QuestionCreateForm';
 import { IQuestion } from '../../types/question';
 import { v4 as uuidv4 } from 'uuid';
+import { useAppDispatch } from '../../store/hooks';
+import { addQuiz } from '../../store/slices/quizesSlice';
 
 interface QuizCreationProps {}
 
 const QuizCreation: FC<QuizCreationProps> = ({}) => {
+    const dispatch = useAppDispatch();
     const [questions, setQuestions] = useState<IQuestion[]>([
         {
             id: '1',
@@ -80,6 +83,7 @@ const QuizCreation: FC<QuizCreationProps> = ({}) => {
                 />
             ))}
             <Button onClick={addNewQuestion}>Add new question</Button>
+            <Button onClick={() => dispatch(addQuiz(questions))}>Create Quiz</Button>
         </div>
     );
 };
