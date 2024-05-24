@@ -2,6 +2,7 @@ import { ChangeEvent, FC, MouseEvent } from 'react';
 import Button from '../../../../components/Button';
 import { IQuestion } from '../../../../types/question';
 import Input from '../../../../components/Input';
+import Answers from '../Answers';
 
 interface QuestionCreateFormProps {
     questionNumber: number;
@@ -39,6 +40,7 @@ const QuestionCreateForm: FC<QuestionCreateFormProps> = ({
                     value={question.name}
                 />
             </label>
+            <Answers answers={question.answers} question={question} setQuestions={setQuestions} />
             <Button onClick={(e) => addNewAnswer(e, question.id)}>Add new answer</Button>
         </form>
     );
