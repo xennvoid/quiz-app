@@ -11,6 +11,7 @@ import Input from '../../components/Input';
 interface QuizCreationProps {}
 
 const QuizCreation: FC<QuizCreationProps> = ({}) => {
+    const [infoMessage, setInfoMessage] = useState<string>('');
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const [quizName, setQuizName] = useState<string>('');
@@ -74,13 +75,22 @@ const QuizCreation: FC<QuizCreationProps> = ({}) => {
     };
 
     const createQuiz = () => {
+        if (quizName.length <= 0 || questions.length <= 0) {
+            setInfoMessage('You must add quiz name and add at least 1 question');
+            return;
+        }
         dispatch(addQuiz({ name: quizName, questions }));
+        setInfoMessage('');
         setTimeout(() => navigate('/'), 1000);
     };
 
     return (
         <div className="container mx-auto flex flex-col gap-5">
-            <Input value={quizName} onChange={(e) => setQuizName(e.target.value)} />
+            <Input
+                value={quizName}
+                onChange={(e) => setQuizName(e.target.value)}
+                placeholder="Your Quiz Name Here..."
+            />
             {questions.map((question, i) => (
                 <QuestionCreateForm
                     key={i}
@@ -93,6 +103,9 @@ const QuizCreation: FC<QuizCreationProps> = ({}) => {
                 />
             ))}
             <Button onClick={addNewQuestion}>Add new question</Button>
+            {infoMessage && (
+                <p className="text-red-500 font-bold border-2 border-solid">{infoMessage}</p>
+            )}
             <Button onClick={createQuiz}>Create Quiz</Button>
         </div>
     );
