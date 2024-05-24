@@ -4,7 +4,6 @@ import { IQuiz } from '../../../../../types/question';
 import Button from '../../../../../components/Button';
 import { IQuizContext, QuizContext } from '../../../../../context/QuizContext';
 import LinkButton from '../../../../../components/LinkButton';
-import ROUTES from '../../../../../routes';
 
 interface QuizCardProps {
     quiz: IQuiz;

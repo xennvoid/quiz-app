@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, MouseEvent } from 'react';
+import { ChangeEvent, FC } from 'react';
 import Input from '../../../../../components/Input';
 import { IAnswer, IQuestion } from '../../../../../types/question';
 import Button from '../../../../../components/Button';
