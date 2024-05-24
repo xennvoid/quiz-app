@@ -5,6 +5,7 @@ import { selectQuizById } from '../../store/slices/quizesSlice';
 import Button from '../../components/Button';
 import QuizOptions from './components/QuizOptions/QuizOptions';
 import { IAnswer } from '../../types/question';
+import QuizScore from './components/QuizScore/QuizScore';
 
 interface QuizPassingProps {}
 
@@ -45,14 +46,10 @@ const QuizPassing: FC<QuizPassingProps> = ({}) => {
                     />
                 </>
             ) : (
-                <p>
-                    Your score is{' '}
-                    {selectedAnswers.reduce((acc, answr) => {
-                        if (answr.isTrue) acc++;
-                        return acc;
-                    }, 0)}{' '}
-                    of {quiz.questions.length}
-                </p>
+                <QuizScore
+                    questionsCount={quiz.questions.length}
+                    selectedAnswers={selectedAnswers}
+                />
             )}
             <Button onClick={goToNextQuestion}>Next Question</Button>
         </div>
