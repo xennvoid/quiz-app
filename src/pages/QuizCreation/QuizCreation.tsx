@@ -68,6 +68,17 @@ const QuizCreation: FC<QuizCreationProps> = ({}) => {
 
     return (
         <div className="container mx-auto flex flex-col gap-5">
+            {questions.map((question, i) => (
+                <QuestionCreateForm
+                    key={i}
+                    questionNumber={i + 1}
+                    question={question}
+                    changeQuestionName={changeQuestionName}
+                    addNewAnswer={addNewAnswer}
+                    setQuestions={setQuestions}
+                    deleteQuestion={deleteQuestion}
+                />
+            ))}
             <Button onClick={addNewQuestion}>Add new question</Button>
         </div>
     );
