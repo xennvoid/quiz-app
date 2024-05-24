@@ -6,6 +6,7 @@ import Button from '../../components/Button';
 import QuizOptions from './components/QuizOptions/QuizOptions';
 import { IAnswer } from '../../types/question';
 import QuizScore from './components/QuizScore/QuizScore';
+import QuizQuestionCount from './components/QuizQuestionCount';
 
 interface QuizPassingProps {}
 
@@ -27,17 +28,20 @@ const QuizPassing: FC<QuizPassingProps> = ({}) => {
         setCurrentQuestion(currentQuestion + 1);
     };
 
+    const lastQuestionNotDone = currentQuestion < quiz.questions.length;
+
     return (
         <div className="container mx-auto flex flex-col gap-2">
             <h2 className="bg-blue-500 font-bold text-xl text-white text-center p-4">
                 {quiz.name}
             </h2>
-            {currentQuestion < quiz.questions.length && (
-                <p>
-                    Question {currentQuestion + 1} of {quiz.questions.length}
-                </p>
+            {lastQuestionNotDone && (
+                <QuizQuestionCount
+                    currentQuestion={currentQuestion}
+                    questionCount={quiz.questions.length}
+                />
             )}
-            {currentQuestion < quiz.questions.length ? (
+            {lastQuestionNotDone ? (
                 <>
                     <p>{quiz.questions[currentQuestion].name}</p>
                     <QuizOptions
@@ -51,7 +55,7 @@ const QuizPassing: FC<QuizPassingProps> = ({}) => {
                     selectedAnswers={selectedAnswers}
                 />
             )}
-            <Button onClick={goToNextQuestion}>Next Question</Button>
+            {lastQuestionNotDone && <Button onClick={goToNextQuestion}>Next Question</Button>}
         </div>
     );
 };
