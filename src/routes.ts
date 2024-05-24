@@ -15,6 +15,10 @@ const ROUTES = {
         path: '/quiz/:id' as const,
         element: QuizPassing,
     },
+    QUIZ_EDIT: {
+        path: '/quiz/edit/:id',
+        element: QuizCreation,
+    },
 };
 
 export type IPath = (typeof ROUTES)[keyof typeof ROUTES]['path'];

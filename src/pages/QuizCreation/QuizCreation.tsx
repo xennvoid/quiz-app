@@ -1,9 +1,9 @@
-import { ChangeEvent, FC, useState, MouseEvent, useContext } from 'react';
+import { ChangeEvent, FC, useState, MouseEvent, useContext, useEffect } from 'react';
 import Button from '../../components/Button';
 import QuestionCreateForm from './components/QuestionCreateForm';
 import { IQuestion } from '../../types/question';
 import { v4 as uuidv4 } from 'uuid';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Input from '../../components/Input';
 import { QuizContext, IQuizContext } from '../../context/QuizContext';
 import LinkButton from '../../components/LinkButton';
@@ -12,11 +12,25 @@ import ROUTES from '../../routes';
 interface QuizCreationProps {}
 
 const QuizCreation: FC<QuizCreationProps> = ({}) => {
-    const { addNewQuiz } = useContext(QuizContext) as IQuizContext;
+    const { pathname } = useLocation();
+    const isEditMode = pathname.includes('edit');
+    const quizId = pathname.split('/')[3];
+
+    const { addNewQuiz, getQuizById, replaceQuiz } = useContext(QuizContext) as IQuizContext;
     const [infoMessage, setInfoMessage] = useState<string>('');
     const navigate = useNavigate();
     const [quizName, setQuizName] = useState<string>('');
     const [questions, setQuestions] = useState<IQuestion[]>([]);
+
+    useEffect(() => {
+        if (isEditMode && quizId) {
+            const quiz = getQuizById(quizId);
+            if (quiz) {
+                setQuizName(quiz.name);
+                setQuestions(quiz.questions);
+            }
+        }
+    }, [quizId]);
 
     const addNewQuestion = () => {
         setQuestions([...questions, { id: uuidv4(), name: '', answers: [] }]);
@@ -68,7 +82,9 @@ const QuizCreation: FC<QuizCreationProps> = ({}) => {
             setInfoMessage('Fill in all fields or delete unnecessary ones');
             return;
         }
-        addNewQuiz(quizName, questions);
+
+        if (isEditMode) replaceQuiz(quizId, quizName, questions);
+        else addNewQuiz(quizName, questions);
 
         setInfoMessage('');
         setTimeout(() => navigate('/'), 1000);

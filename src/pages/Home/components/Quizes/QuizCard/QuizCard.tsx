@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { IQuiz } from '../../../../../types/question';
 import Button from '../../../../../components/Button';
 import { IQuizContext, QuizContext } from '../../../../../context/QuizContext';
+import LinkButton from '../../../../../components/LinkButton';
+import ROUTES from '../../../../../routes';
 
 interface QuizCardProps {
     quiz: IQuiz;
@@ -28,6 +30,7 @@ const QuizCard: FC<QuizCardProps> = ({ quiz }) => {
                     Quiz consists of <strong>{quiz.questions.length}</strong> questions!
                 </p>
             </Link>
+            <LinkButton to={`/quiz/edit/${quiz.id}`}>Edit</LinkButton>
         </div>
     );
 };
